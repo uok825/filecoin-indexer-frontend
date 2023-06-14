@@ -1,25 +1,26 @@
-import { Page, Text, Divider, Card, Button, Grid, Input, Code, Spacer } from '@geist-ui/react'
+import { Page, Text, Divider, Card, Button, Grid, Input, Spacer } from '@geist-ui/react'
 import { Search } from '@geist-ui/react-icons'
 import * as React from 'react';
 import './App.css';
+import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
+import { Web3Button, Web3Modal } from '@web3modal/react'
+import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+import {mainnet, filecoin, filecoinCalibration, filecoinHyperspace } from 'wagmi/chains'
 
-const projectId = '923cac9743f5b34c7abbdb38ce8a4cc5';
-const providerMetadata = {
-  name: 'Subpr0br',
-  description: 'A Subnet Explorer',
-  url: '',
-  icons: [''],
-  redirect: {
-    native: '',
-    universal: ''
-  }
-};
-
-
+const projectId = process.env.REACT_APP_PROJECT_ID
+const chains = [mainnet,filecoin,filecoinCalibration,filecoinHyperspace]
+const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, version: 2, chains }),
+  publicClient
+})
+const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
 function App() {
   return (
     <Page>
+      <WagmiConfig config={wagmiConfig}>
       <Page.Header>
         <Grid.Container justify="center">
           <Grid xs={8} justify="left" >
@@ -30,7 +31,7 @@ function App() {
             <Button width={0.4} type="secondary" icon={<Search />}></Button>
           </Grid>
           <Grid xs={8} mt="1"justify="right">
-            <Text type="secondary" h3>Wallet Connect</Text>
+            <Web3Button type="secondary" />
           </Grid>
         </Grid.Container>
       </Page.Header>
@@ -90,6 +91,8 @@ function App() {
           </div>
         </ul>
       </Page.Footer>
+      </WagmiConfig>
+      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </Page>
 
   );
