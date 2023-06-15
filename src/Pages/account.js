@@ -1,15 +1,12 @@
 import * as React from 'react';
-import './App.css';
 
-
-import { Page, Text, Divider, Card, Button, Grid, Input, Spacer, Collapse } from '@geist-ui/react'
+import { Page, Text, Divider, Card, Button, Grid, Input, Spacer } from '@geist-ui/react'
 import { Search } from '@geist-ui/react-icons'
+
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Button, Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import {mainnet, filecoin, filecoinCalibration, filecoinHyperspace } from 'wagmi/chains'
-
-
 
 const projectId = process.env.REACT_APP_PROJECT_ID
 const chains = [mainnet,filecoin,filecoinCalibration,filecoinHyperspace]
@@ -21,7 +18,7 @@ const wagmiConfig = createConfig({
 })
 const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
-function App() {
+function Account() {
   return (
     <Page>
       <WagmiConfig config={wagmiConfig}>
@@ -98,7 +95,8 @@ function App() {
       </WagmiConfig>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </Page>
+
   );
 }
 
-export default App;
+export default Account;

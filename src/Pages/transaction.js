@@ -1,15 +1,10 @@
-import * as React from 'react';
-import './App.css';
-
-
-import { Page, Text, Divider, Card, Button, Grid, Input, Spacer, Collapse } from '@geist-ui/react'
+import { Page, Text, Divider, Card, Button, Grid, Input, Spacer } from '@geist-ui/react'
 import { Search } from '@geist-ui/react-icons'
+import * as React from 'react';
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Button, Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import {mainnet, filecoin, filecoinCalibration, filecoinHyperspace } from 'wagmi/chains'
-
-
 
 const projectId = process.env.REACT_APP_PROJECT_ID
 const chains = [mainnet,filecoin,filecoinCalibration,filecoinHyperspace]
@@ -21,7 +16,7 @@ const wagmiConfig = createConfig({
 })
 const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
-function App() {
+function Transaction() {
   return (
     <Page>
       <WagmiConfig config={wagmiConfig}>
@@ -39,35 +34,6 @@ function App() {
           </Grid>
         </Grid.Container>
       </Page.Header>
-      <Grid.Container justify="space-between" mt="20px">
-        <Card justify="left" width="800px">
-          <Card.Content>
-            <Text b my={0}>Last Blocks</Text>
-          </Card.Content>
-          <Divider h="1px" my={0} />
-          <Card.Content>
-          <Text>Last Blocks Should Come Here</Text>
-          <Text>Last Blocks Should Come Here</Text>
-          <Text>Last Blocks Should Come Here</Text>
-          <Text>Last Blocks Should Come Here</Text>
-          <Text>Last Blocks Should Come Here</Text>
-          </Card.Content>
-        </Card>
-        <Spacer y={12} />
-        <Card justify="right" width="800px">
-          <Card.Content>
-            <Text b my={0}>Last Transactions</Text>
-          </Card.Content>
-          <Divider h="1px" my={0} />
-          <Card.Content>
-            <Text>Last Transactions Should Come Here</Text>
-            <Text>Last Transactions Should Come Here</Text>
-            <Text>Last Transactions Should Come Here</Text>
-            <Text>Last Transactions Should Come Here</Text>
-            <Text>Last Transactions Should Come Here</Text>
-          </Card.Content>
-        </Card>
-      </Grid.Container>
       <Page.Footer>
         
         <ul className="menu menu-horizontal">
@@ -98,7 +64,8 @@ function App() {
       </WagmiConfig>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </Page>
+
   );
 }
 
-export default App;
+export default Transaction;
