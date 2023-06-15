@@ -1,12 +1,13 @@
 import * as React from 'react';
 
-import { Page, Text, Divider, Card, Button, Grid, Input, Spacer } from '@geist-ui/react'
+import { Page, Text, Divider, Card, Button, Grid, Input, Spacer, Loading } from '@geist-ui/react'
 import { Search } from '@geist-ui/react-icons'
 
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Button, Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import {mainnet, filecoin, filecoinCalibration, filecoinHyperspace } from 'wagmi/chains'
+import { TransactionNotFoundError } from 'viem';
 
 
 const projectId = process.env.REACT_APP_PROJECT_ID
@@ -19,7 +20,20 @@ const wagmiConfig = createConfig({
 })
 const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
+
 function Home() {
+
+  const [blocksData, setBlocksData] = React.useState([{}]);
+  React.useEffect(() => {
+    fetch("/block").then(response => response.json()).then(data => setBlocksData(data));
+  }, []);
+
+  const [transactionData, setTransactionData] = React.useState([{}]);
+  React.useEffect(() => {
+    fetch("/transaction").then(response => response.json()).then(data => setTransactionData(data));
+  }, []);
+      
+
   return (
     <Page>
       <WagmiConfig config={wagmiConfig}>
@@ -44,11 +58,15 @@ function Home() {
           </Card.Content>
           <Divider h="1px" my={0} />
           <Card.Content>
+        {(typeof blocksData.height !== 'undefined') ? (<Loading>Loading</Loading>) : (
+          <p>
           <Text>Last Blocks Should Come Here</Text>
           <Text>Last Blocks Should Come Here</Text>
           <Text>Last Blocks Should Come Here</Text>
           <Text>Last Blocks Should Come Here</Text>
           <Text>Last Blocks Should Come Here</Text>
+          </p>
+          )}
           </Card.Content>
         </Card>
         <Spacer y={12} />
@@ -58,11 +76,15 @@ function Home() {
           </Card.Content>
           <Divider h="1px" my={0} />
           <Card.Content>
+          {(typeof transactionData.block_id !== 'undefined') ? (<Loading>Loading</Loading>) : (
+            <p>
             <Text>Last Transactions Should Come Here</Text>
             <Text>Last Transactions Should Come Here</Text>
             <Text>Last Transactions Should Come Here</Text>
             <Text>Last Transactions Should Come Here</Text>
             <Text>Last Transactions Should Come Here</Text>
+            </p>
+          )}
           </Card.Content>
         </Card>
       </Grid.Container>

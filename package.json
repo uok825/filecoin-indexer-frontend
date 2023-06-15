@@ -1,6 +1,7 @@
 {
   "name": "filecoin-indexer-frontend",
   "version": "0.1.0",
+  "proxy": "http://localhost:3002",
   "private": true,
   "dependencies": {
     "@geist-ui/react": "^2.2.5",
