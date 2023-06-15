@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Page, Text, Divider, Card, Button, Grid, Input, Spacer } from '@geist-ui/react'
+import { Page, Text, Divider, Card, Button, Grid, Input, Description, Code, Collapse } from '@geist-ui/react'
 import { Search } from '@geist-ui/react-icons'
 
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
@@ -36,35 +36,41 @@ function Account() {
           </Grid>
         </Grid.Container>
       </Page.Header>
-      <Grid.Container justify="space-between" mt="20px">
-        <Card justify="left" width="800px">
-          <Card.Content>
-            <Text b my={0}>Last Blocks</Text>
-          </Card.Content>
-          <Divider h="1px" my={0} />
-          <Card.Content>
-          <Text>Last Blocks Should Come Here</Text>
-          <Text>Last Blocks Should Come Here</Text>
-          <Text>Last Blocks Should Come Here</Text>
-          <Text>Last Blocks Should Come Here</Text>
-          <Text>Last Blocks Should Come Here</Text>
-          </Card.Content>
-        </Card>
-        <Spacer y={12} />
-        <Card justify="right" width="800px">
-          <Card.Content>
-            <Text b my={0}>Last Transactions</Text>
-          </Card.Content>
-          <Divider h="1px" my={0} />
-          <Card.Content>
-            <Text>Last Transactions Should Come Here</Text>
-            <Text>Last Transactions Should Come Here</Text>
-            <Text>Last Transactions Should Come Here</Text>
-            <Text>Last Transactions Should Come Here</Text>
-            <Text>Last Transactions Should Come Here</Text>
-          </Card.Content>
-        </Card>
-      </Grid.Container>
+      <Page.Content>
+      <Grid.Container justify="center" mt="20px">
+          <Card justify="center" width="1000px">
+            <Card >
+              <Card.Content>
+                <Description title="Address" content={<p><Code>if have ens 'ens' | Address</Code></p>} />
+              </Card.Content>
+            </Card>
+            <Card >
+              <Card.Content>
+                <Description title="Balances" content=
+                {
+                <p>
+                <Code>Token 1:</Code>
+                <div></div>
+                <Code>Token 2:</Code>
+                <div></div>
+                <Code>Token 3:</Code>
+                </p>
+                } />
+              </Card.Content>
+            </Card>
+            <Card >
+              <Card.Content>
+                <Description title="Nonce" content={<p><Code>Nonce Count</Code></p>} />
+              </Card.Content>
+            </Card>
+            <Collapse title="Transactions">
+              <Text>Transaction 1:</Text>
+              <Text>Transaction 2:</Text>
+              <Text>Transaction 3:</Text>
+            </Collapse>
+          </Card>
+        </Grid.Container>
+      </Page.Content>
       <Page.Footer>
         
         <ul className="menu menu-horizontal">

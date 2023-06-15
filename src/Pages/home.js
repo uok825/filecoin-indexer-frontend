@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Page, Text, Divider, Card, Button, Grid, Input, Spacer } from '@geist-ui/react'
 import { Search } from '@geist-ui/react-icons'
+
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Button, Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
