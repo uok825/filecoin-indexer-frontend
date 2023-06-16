@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 // you can use this in every component
 export const fetchAPI = async (url, set) => {
   const res = await fetch(`http://localhost:3002/${url}`);
+  console.log(res)
   const data = await res.json();
   set(data);
 };
@@ -40,7 +41,7 @@ function Home() {
         {!blocksData ? (<Loading>Loading</Loading>) : (
           <p>
             {blocksData.map((block) => (
-              <Link href={`/block/${block.id}`} icon> <p>{block.id || 'Block Id not found'}</p> </Link>
+              <Link to={`/block/${block.id}`} icon> <p>{block.id || 'Block Id not found'}</p> </Link>
             ))}
           </p>
           )}
@@ -56,7 +57,7 @@ function Home() {
           {!transactionData ? (<Loading>Loading</Loading>) : (
             <p>
               {transactionData.map((transaction) => (
-                <Link href={`/transaction/${transaction.id}`} icon> <p>{transaction.id || 'TxId not found'}</p> </Link>
+                <Link to={`/transaction/${transaction.id}`} icon> <p>{transaction.id || 'TxId not found'}</p> </Link>
               ))}
             </p>
           )}

@@ -16,7 +16,7 @@ function Transaction() {
 
   React.useEffect(() => {
     if (id) {
-      fetchAPI(`/transaction?transactionId=${id}`, setTransactionDetails);
+      fetchAPI(`transaction?transactionId=${id}`, setTransactionDetails);
     }
   }, []);
 

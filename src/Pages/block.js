@@ -19,8 +19,8 @@ function Block() {
 
   React.useEffect(() => {
     if (id) {
-      fetchAPI(`/block?block_id=${id}`, setBlockDetails);
-      fetchAPI(`/transactions?block_id=${id}`, setBlockTransactions);
+      fetchAPI(`block?block_id=${id}`, setBlockDetails);
+      fetchAPI(`transactions?block_id=${id}`, setBlockTransactions);
     }
   }, []);
 

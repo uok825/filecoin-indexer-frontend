@@ -15,13 +15,13 @@ function Account() {
 
   React.useEffect(() => {
     if (id) {
-      fetchAPI(`/account?accountId=${id}`, setAccountDetails);
+      fetchAPI(`account?accountId=${id}`, setAccountDetails);
     }
   }, []);
 
   React.useEffect(() => {
     if (id) {
-      fetchAPI(`/ownedtransactions?accountId=${id}`, setAccountTransactionDetails);
+      fetchAPI(`ownedtransactions?accountId=${id}`, setAccountTransactionDetails);
     }
   }, []);
 
@@ -43,18 +43,14 @@ function Account() {
                 <Description title="Balances" content=
                 {
                 <p>
-                <Text b>FIL: {accountDetails.map((account)=>(account.balance / 10 ** 18))}</Text>
-                <div></div>
-                <Code>Token 2:</Code>
-                <div></div>
-                <Code>Token 3:</Code>
+                <Text b>FIL: {accountDetails[0].balance / 10 ** 18}</Text>
                 </p>
                 } />
               </Card.Content>
             </Card>
             <Card >
               <Card.Content>
-                <Description title="Nonce" content={<p><Text b>{accountDetails.map((account) => (account.nonce))}</Text></p>} />
+                <Description title="Nonce" content={<p><Text b>{accountDetails[0].nonce}</Text></p>} />
               </Card.Content>
             
             </Card>
