@@ -1,30 +1,26 @@
 import * as React from 'react';
 
-import { Page, Text, Divider, Card, Button, Grid, Input, Collapse } from '@geist-ui/react'
-import { Search } from '@geist-ui/react-icons'
+import { Page, Text, Card, Grid, Collapse } from '@geist-ui/react'
 
-import { Web3Button } from '@web3modal/react'
 
 import Navbar from "../Navbar"
 import Footer from "../Footer"
 import { useParams } from 'react-router-dom';
 import { fetchAPI } from './home';
 
-let blockId = 0;
-let blockHeight = 0;
-let blockTxs = 0;
 
 function Block() {
   // get block id from url
   const { id } = useParams();
 
-  const [blockDetails, setBlockDetails] = React.useState({});
+  const [blockDetails, setBlockDetails] = React.useState(null);
+  console.log(blockDetails)
   const [blockTransactions, setBlockTransactions] = React.useState([]);
 
   React.useEffect(() => {
     if (id) {
-      fetchAPI(`block?block_id=${id}`, setBlockDetails);
-      fetchAPI(`transactions?block_id=${id}`, setBlockTransactions);
+      fetchAPI(`/block?block_id=${id}`, setBlockDetails);
+      fetchAPI(`/transactions?block_id=${id}`, setBlockTransactions);
     }
   }, []);
 
@@ -36,10 +32,10 @@ function Block() {
           {blockDetails ? (
             <>
               <Card.Content>
-                <Text h4>Block: {blockId}</Text>
+                <Text h4>Block: {id}</Text>
               </Card.Content>
               <Card.Content>
-                <Text h4>Height: {blockHeight}</Text>
+                <Text h4>Height: {blockDetails.map((block) => (block.height))}</Text>
               </Card.Content>
             </>
             ) : (
@@ -49,7 +45,7 @@ function Block() {
               <Collapse.Group justify="center" width="1000px" my={2}>
                 <Collapse title="Transactions on the block:">
                   {blockTransactions && blockTransactions.map((tx) => (
-                    <Text> {tx || ''} </Text>
+                    <Text> {tx.id || ''} </Text>
                   ))}
                 </Collapse>
               </Collapse.Group>

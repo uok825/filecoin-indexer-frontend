@@ -1,14 +1,25 @@
 import * as React from 'react';
 
-import { Page, Text, Divider, Card, Button, Grid, Input, Collapse, Description, Code } from '@geist-ui/react'
-import { Search } from '@geist-ui/react-icons'
-
-import { Web3Button } from '@web3modal/react'
+import { Page, Text, Card, Grid, Collapse, Description } from '@geist-ui/react'
 
 import Navbar from "../Navbar"
 import Footer from "../Footer"
 
+import { useParams } from 'react-router-dom';
+import { fetchAPI } from './home';
+
+
+
 function Transaction() {
+  const {id} = useParams();
+  const [transactionDetails, setTransactionDetails] = React.useState([{}]);
+
+  React.useEffect(() => {
+    if (id) {
+      fetchAPI(`/transaction?transactionId=${id}`, setTransactionDetails);
+    }
+  }, []);
+
   return (
     <Page>
         <Navbar />
@@ -16,32 +27,31 @@ function Transaction() {
           <Card justify="center" width="1000px">
             <Card >
               <Card.Content>
-                <Description title="Transaction ID" content={<p><Code>txId</Code></p>} />
+                <Description title="Transaction ID" content={<p><Text b>{id}</Text></p>} />
               </Card.Content>
             </Card>
             <Card >
               <Card.Content>
-                <Description title="From" content={<p><Code>From Address</Code></p>} />
+                <Description title="From" content={<p><Text b>{transactionDetails.map((details)=>(details.from))}</Text></p>} />
               </Card.Content>
             </Card>
             <Card >
               <Card.Content>
-                <Description title="To" content={<p><Code>To Address</Code></p>} />
+                <Description title="To" content={<p><Text b>{transactionDetails.map((details)=>(details.to))}</Text></p>} />
+              </Card.Content>
+            </Card>
+            <Card >
+              <Card.Content>
+                <Description title="Value" content={<p><Text b>{transactionDetails.map((details)=>(details.value))}</Text></p>} />
               </Card.Content>
             </Card>
             <Card>
-              <Card.Content>
-                <Description title="Gas Paid" content={<p><Code>gasPaid</Code></p>} />
-              </Card.Content>
-              <Card.Content>
-                <Description title="Gas Price" content={<p><Code>gasPrice</Code></p>} />
-              </Card.Content>
-              <Card.Content>
-                <Description title="Gas Limit" content={<p><Code>gasLimit</Code></p>} />
+            <Card.Content>
+                <Description title="Gas" content={<p><Text b>Gas Paid: {transactionDetails.map((details)=>(details.gas_premium * details.gas_limit / 10 ** 18))} FIL</Text><div></div><Text b>Gas Price: {transactionDetails.map((details)=>(details.gas_premium / 10 ** 5))} nanoFIL</Text><div><Text b>Gas Limit: {transactionDetails.map((details)=>(details.gas_limit))}</Text></div></p>} />
               </Card.Content>
             </Card>
             <Collapse title="Transaction Data">
-              <Text>Params:</Text>
+            <Text>{transactionDetails.map((details)=>(details.params))}</Text>
             </Collapse>
           </Card>
         </Grid.Container>

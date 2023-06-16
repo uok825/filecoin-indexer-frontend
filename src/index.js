@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { GeistProvider, CssBaseline } from '@geist-ui/react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { WagmiConfig } from 'wagmi';
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
@@ -33,8 +32,8 @@ ReactDOM.render(
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/block/:id" element={<Block />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/transaction" element={<Transaction />} />
+            <Route path="/account/:id" element={<Account />} />
+            <Route path="/transaction/:id" element={<Transaction />} />
           </Routes>
         </Router>
       </GeistProvider>

@@ -1,6 +1,6 @@
-import { Button, Grid, Input, Page, Text } from '@geist-ui/react'
+import { Button, Grid, Input, Page, Text, Link } from '@geist-ui/react'
 import { Search } from '@geist-ui/react-icons'
-import { Web3Button } from '@web3modal/react/dist/_types'
+import { Web3Button } from '@web3modal/react'
 import React from 'react'
 
 const Navbar = () => {
@@ -8,7 +8,7 @@ const Navbar = () => {
     <Page.Header>
         <Grid.Container justify="center">
         <Grid xs={8} justify="left" >
-            <Text h1>Subpr0br</Text>
+            <Link href="/"><Text h1>Subpr0br</Text></Link>
         </Grid>
         <Grid xs={8} mt="1" justify="center">
             <Input placeholder="Enter a BlockID, TxId, Account etc." scale={4 / 3} width={40}/>

@@ -1,19 +1,41 @@
 import * as React from 'react';
 
-import { Page, Text, Divider, Card, Button, Grid, Input, Description, Code, Collapse } from '@geist-ui/react'
-import { Search } from '@geist-ui/react-icons'
+import { Page, Text, Card, Grid, Link, Description, Code, Collapse } from '@geist-ui/react'
 
-import { Web3Button } from '@web3modal/react'
+import Navbar from '../Navbar';
+import Footer from '../Footer';
+
+import { useParams } from 'react-router-dom';
+import { fetchAPI } from './home';
 
 function Account() {
+  const {id} = useParams();
+  const [accountDetails, setAccountDetails] = React.useState(null);
+  const [accountTransactionDetails, setAccountTransactionDetails] = React.useState([{}]);
+
+  React.useEffect(() => {
+    if (id) {
+      fetchAPI(`/account?accountId=${id}`, setAccountDetails);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (id) {
+      fetchAPI(`/ownedtransactions?accountId=${id}`, setAccountTransactionDetails);
+    }
+  }, []);
+
   return (
     <Page>
       <Page.Content>
+      <Navbar />
       <Grid.Container justify="center" mt="20px">
           <Card justify="center" width="1000px">
+            {accountDetails ? (
+              <>
             <Card >
               <Card.Content>
-                <Description title="Address" content={<p><Code>if have ens 'ens' | Address</Code></p>} />
+                <Description title="Address" content={<p><Text b>{id}</Text></p>} />
               </Card.Content>
             </Card>
             <Card >
@@ -21,7 +43,7 @@ function Account() {
                 <Description title="Balances" content=
                 {
                 <p>
-                <Code>Token 1:</Code>
+                <Text b>FIL: {accountDetails.map((account)=>(account.balance / 10 ** 18))}</Text>
                 <div></div>
                 <Code>Token 2:</Code>
                 <div></div>
@@ -32,17 +54,25 @@ function Account() {
             </Card>
             <Card >
               <Card.Content>
-                <Description title="Nonce" content={<p><Code>Nonce Count</Code></p>} />
+                <Description title="Nonce" content={<p><Text b>{accountDetails.map((account) => (account.nonce))}</Text></p>} />
               </Card.Content>
+            
             </Card>
             <Collapse title="Transactions">
-              <Text>Transaction 1:</Text>
-              <Text>Transaction 2:</Text>
-              <Text>Transaction 3:</Text>
+            <p>
+            {accountTransactionDetails.map((account) => (
+              <Link href={`/transaction/${account.id}`} icon> {account.id || 'TxId not found'} </Link>
+            ))}
+            </p>
             </Collapse>
+            </>
+          ) : (
+            <Text h4>Account not found or loading...</Text>
+          )}
           </Card>
         </Grid.Container>
       </Page.Content>
+      <Footer />
     </Page>
 
   );
