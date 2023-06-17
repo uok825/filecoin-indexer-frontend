@@ -9,18 +9,18 @@ import { useParams } from 'react-router-dom';
 import { fetchAPI } from './home';
 
 
-function Block() {
-  // get block id from url
+function CrossChainBlock() {
+  // get crosschainBlock id from url
   const { id } = useParams();
 
-  const [blockDetails, setBlockDetails] = React.useState(null);
-  console.log(blockDetails)
-  const [blockTransactions, setBlockTransactions] = React.useState([]);
+  const [crosschainBlockDetails, setcrosschainBlockDetails] = React.useState(null);
+  console.log(crosschainBlockDetails)
+  const [crosschainBlockTransactions, setcrosschainBlockTransactions] = React.useState([]);
 
   React.useEffect(() => {
     if (id) {
-      fetchAPI(`block?block_id=${id}`, setBlockDetails);
-      fetchAPI(`transactions?block_id=${id}`, setBlockTransactions);
+      fetchAPI(`crosschains?block_id=${id}`, setcrosschainBlockDetails);
+      fetchAPI(`corsschain?transactionId=${id}`, setcrosschainBlockTransactions);
     }
   }, []);
 
@@ -29,22 +29,22 @@ function Block() {
         <Navbar />
         <Grid.Container justify="center" mt="20px">
           <Card justify="center" width="1000px">
-          {blockDetails ? (
+          {crosschainBlockDetails ? (
             <>
               <Card.Content>
-                <Text h4>Block: {id}</Text>
+                <Text h4>crosschainBlock: {id}</Text>
               </Card.Content>
               <Card.Content>
-                <Text h4>Height: {blockDetails.map((block) => (block.height))}</Text>
+                <Text h4>Height: {crosschainBlockDetails.map((crosschainBlock) => (crosschainBlock.height))}</Text>
               </Card.Content>
             </>
             ) : (
-              <Text h4>Block not found or loading...</Text>
+              <Text h4>crosschainBlock not found or loading...</Text>
             )}
           </Card>
               <Collapse.Group justify="center" width="1000px" my={2}>
-                <Collapse title="Transactions on the block:">
-                  {blockTransactions && blockTransactions.map((tx) => (
+                <Collapse title="Transactions on the crosschainBlock:">
+                  {crosschainBlockTransactions && crosschainBlockTransactions.map((tx) => (
                     <Link href={`/transaction/${tx.id}`} icon> {tx.id || ''} </Link>
                   ))}
                 </Collapse>
@@ -56,4 +56,4 @@ function Block() {
   );
 }
 
-export default Block;
+export default CrossChainBlock;

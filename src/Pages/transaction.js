@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Page, Text, Card, Grid, Collapse, Description } from '@geist-ui/react'
+import { Page, Text, Card, Grid, Collapse, Description, Link } from '@geist-ui/react'
 
 import Navbar from "../Navbar"
 import Footer from "../Footer"
@@ -32,12 +32,12 @@ function Transaction() {
             </Card>
             <Card >
               <Card.Content>
-                <Description title="From" content={<p><Text b>{transactionDetails.map((details)=>(details.from))}</Text></p>} />
+                <Description title="From" content={<p><Link href={`/account/${transactionDetails.map((details)=>(details.from))}`} b>{transactionDetails.map((details)=>(details.from))}</Link></p>} />
               </Card.Content>
             </Card>
             <Card >
               <Card.Content>
-                <Description title="To" content={<p><Text b>{transactionDetails.map((details)=>(details.to))}</Text></p>} />
+                <Description title="To" content={<p><Link href={`/account/${transactionDetails.map((details)=>(details.to))}`} b>{transactionDetails.map((details)=>(details.to))}</Link></p>} />
               </Card.Content>
             </Card>
             <Card >

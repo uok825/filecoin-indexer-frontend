@@ -68,7 +68,7 @@ function Home() {
             </Card.Content>
           </Card>
         </Grid>
-        <Grid xs={24} md={24} mx={'auto'}>
+        <Grid xs={24} md={22} mx={'auto'}>
           <Card justify="center" width="800px">
             <Card.Content>
               <Text h3 my={0}>Last CrossChain Messages</Text>

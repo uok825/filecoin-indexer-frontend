@@ -35,7 +35,7 @@ function Account() {
               <>
             <Card >
               <Card.Content>
-                <Description title="Address" content={<p><Text b>{id}</Text></p>} />
+                <Description title="Address" content={<p><Link href={`${id}`} b>{id}</Link></p>} />
               </Card.Content>
             </Card>
             <Card >
